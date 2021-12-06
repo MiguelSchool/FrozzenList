@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  mariadb:
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_USER: Miguel
+      MARIADB_PASSWORD: Miguel@linux
+      MYSQL_ROOT_PASSWORD: Miguel@linux
+      MARIADB_DATABASE: frozenList
+    ports:
+      - '3307:3306'
+    volumes:
+      - ./data:/var/lib/mariadb
+
