@@ -20,7 +20,7 @@ public class Assessment {
     private LocalDate date;
     private String description;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "assessments")
     private final Set<User>users;
 
     public Assessment() {

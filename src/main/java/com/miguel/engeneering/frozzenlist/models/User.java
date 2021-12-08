@@ -5,8 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Getter
 @Setter
@@ -24,12 +23,13 @@ public class User {
     @ManyToMany
     @JoinTable(
             name = "user_assessment",
-            joinColumns= @JoinColumn("id"),
-            inverseJoinColumns = @JoinColumn("id")
+            joinColumns= @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "assessment_id")
     )
-    private final Map<Long,Assessment> assessments;
+    private final Set<Assessment> assessments;
+
 
     public User() {
-        this.assessments = new HashMap<>();
+        this.assessments = new HashSet<>();
     }
 }
