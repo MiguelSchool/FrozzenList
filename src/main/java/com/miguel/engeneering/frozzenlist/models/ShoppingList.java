@@ -56,4 +56,16 @@ public class ShoppingList {
     public int hashCode() {
         return Objects.hash(id, stock);
     }
+
+    @Override
+    public String toString() {
+        return "ShoppingList{" +
+                "id=" + id +
+                ", fromDate=" + fromDate +
+                ", entireDate=" + entireDate +
+                ", budget=" + budget +
+                ", users=" + users +
+                ", stock=" + stock +
+                '}';
+    }
 }

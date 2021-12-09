@@ -40,4 +40,6 @@ public class Brand {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+
 }

@@ -40,4 +40,6 @@ public class Stock {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+
 }

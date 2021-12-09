@@ -55,4 +55,6 @@ public class Inventory {
     public int hashCode() {
         return Objects.hash(id, type);
     }
+
+
 }

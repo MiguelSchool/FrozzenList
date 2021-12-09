@@ -32,4 +32,6 @@ public class InventoryType {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+
 }

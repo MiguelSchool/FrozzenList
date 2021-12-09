@@ -58,4 +58,6 @@ public class ProductType {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+
 }

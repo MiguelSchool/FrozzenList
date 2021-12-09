@@ -43,4 +43,16 @@ public class Assessment {
     public int hashCode() {
         return Objects.hash(id, recipe);
     }
+
+    @Override
+    public String toString() {
+        return "Assessment{" +
+                "id=" + id +
+                ", evaluation=" + evaluation +
+                ", date=" + date +
+                ", description='" + description + '\'' +
+                ", users=" + users +
+                ", recipe=" + recipe +
+                '}';
+    }
 }

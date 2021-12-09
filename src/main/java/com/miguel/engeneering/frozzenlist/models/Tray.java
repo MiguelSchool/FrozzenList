@@ -51,4 +51,6 @@ public class Tray {
     public int hashCode() {
         return Objects.hash(id, inventory);
     }
+
+
 }

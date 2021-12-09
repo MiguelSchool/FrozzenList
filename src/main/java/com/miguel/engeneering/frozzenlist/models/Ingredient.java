@@ -51,4 +51,5 @@ public class Ingredient {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }
