@@ -1,10 +1,13 @@
 package com.miguel.engeneering.frozzenlist.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
+import java.util.*;
+
+@Getter
+@Setter
 @Entity
 public class Inventory {
 
@@ -14,17 +17,29 @@ public class Inventory {
     private String name;
     private String inventoryPlace;
 
-    public Inventory(String name) {
-        super();
+    @ManyToMany(mappedBy = "inventories")
+    private Set<User> users;
+
+    @ManyToOne
+    private InventoryType type;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "inventory")
+    private List<Tray> trays;
+
+    public Inventory(String name, InventoryType type) {
+        this();
         this.name = name;
+        this.type = type;
     }
 
-    public Inventory(String name, String inventoryPlace) {
+    public Inventory(String name, String inventoryPlace, InventoryType type) {
+        this();
         this.name = name;
         this.inventoryPlace = inventoryPlace;
+        this.type = type;
     }
 
     public Inventory() {
-        this.name = "default";
+        this.trays = new ArrayList<>();
     }
 }

@@ -26,10 +26,39 @@ public class User {
             joinColumns= @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "assessment_id")
     )
-    private final Set<Assessment> assessments;
+    private Set<Assessment> assessments;
 
+    @ManyToMany
+    @JoinTable(
+            name = "user_shoppingList",
+            joinColumns = @JoinColumn(name= "user_id"),
+            inverseJoinColumns = @JoinColumn(name= "shoppinglist_id")
+    )
+    private Set<ShoppingList> shoppingLists;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_recipe",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name="recipe_id")
+    )
+    private List<Recipe> recipes;
+
+    @ManyToMany
+    @JoinTable(
+            name="user_inventory",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name="inventory_id")
+    )
+    private Set<Inventory> inventories;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    private Map<Long,Tray>trays;
 
     public User() {
         this.assessments = new HashSet<>();
+        this.shoppingLists = new HashSet<>();
+        this.recipes = new ArrayList<>();
+        this.inventories = new HashSet<>();
     }
 }

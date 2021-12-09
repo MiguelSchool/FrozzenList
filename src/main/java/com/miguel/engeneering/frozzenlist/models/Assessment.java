@@ -23,6 +23,9 @@ public class Assessment {
     @ManyToMany(mappedBy = "assessments")
     private final Set<User>users;
 
+    @ManyToOne
+    private Recipe recipe;
+
     public Assessment() {
         this.users = new HashSet<>();
     }

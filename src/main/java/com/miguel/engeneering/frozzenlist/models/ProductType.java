@@ -1,10 +1,14 @@
 package com.miguel.engeneering.frozzenlist.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Getter
+@Setter
 @Entity
 public class ProductType {
     @Id
@@ -14,8 +18,16 @@ public class ProductType {
     private double minStockValue;
     private double maxStockValue;
 
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "productType")
+    private Set<Product>products;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productType")
+    private Set<Tray>trays;
+
     public ProductType() {
-       new ProductType("Default");
+       this("Default");
+       this.trays = new HashSet<>();
+       this.products = new HashSet<>();
     }
 
     public ProductType(String type) {
@@ -32,4 +44,5 @@ public class ProductType {
         this.minStockValue = minStockValue;
         this.maxStockValue = maxStockValue;
     }
+
 }

@@ -1,19 +1,48 @@
 package com.miguel.engeneering.frozzenlist.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.sql.Time;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 public class Recipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String identifier;
-    private Time cookTime;
+    private int cookTimeMinutes;
     private Byte[] image_source;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private Set<Assessment> assessment;
+
+    @ManyToMany(mappedBy = "recipes")
+    private final Set<User>users;
+
+    @ManyToMany(mappedBy = "recipes")
+    private final List<Ingredient>ingredients;
+
+    public Recipe(){
+        this.users = new HashSet<>();
+        this.ingredients = new ArrayList<>();
+    }
+
+    public Recipe(String identifier, int minutes){
+        this();
+        this.identifier = identifier;
+        this.cookTimeMinutes = minutes;
+    }
+
+    public Recipe(String identifier, int minutes, Byte[]image_source){
+        this(identifier,minutes);
+        this.image_source = image_source;
+    }
 }

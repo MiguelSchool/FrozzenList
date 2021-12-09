@@ -1,4 +1,4 @@
-package com.miguel.engeneering.frozzenlist.services;
+package com.miguel.engeneering.frozzenlist.models.factories;
 
 import com.miguel.engeneering.frozzenlist.models.ProductType;
 

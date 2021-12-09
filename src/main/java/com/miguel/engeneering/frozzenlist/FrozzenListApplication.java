@@ -8,6 +8,7 @@ public class FrozzenListApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(FrozzenListApplication.class, args);
+
     }
 
 }
