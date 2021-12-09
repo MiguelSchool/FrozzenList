@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -28,5 +29,18 @@ public class Assessment {
 
     public Assessment() {
         this.users = new HashSet<>();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Assessment that = (Assessment) o;
+        return id.equals(that.id) && recipe.equals(that.recipe);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, recipe);
     }
 }

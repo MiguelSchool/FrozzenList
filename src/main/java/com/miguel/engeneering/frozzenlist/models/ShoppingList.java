@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -41,5 +42,18 @@ public class ShoppingList {
     public ShoppingList(int validityPeriod, double budget) {
         this(validityPeriod);
         this.budget = budget;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ShoppingList that = (ShoppingList) o;
+        return id.equals(that.id) && stock.equals(that.stock);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, stock);
     }
 }

@@ -42,4 +42,17 @@ public class Inventory {
     public Inventory() {
         this.trays = new ArrayList<>();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Inventory inventory = (Inventory) o;
+        return id.equals(inventory.id) && type.equals(inventory.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, type);
+    }
 }
