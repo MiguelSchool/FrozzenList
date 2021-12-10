@@ -1,5 +1,7 @@
 package com.miguel.engeneering.frozzenlist.models;
 
+import com.miguel.engeneering.frozzenlist.models.factories.InventoryServiceFactory;
+import com.miguel.engeneering.frozzenlist.models.factories.strategies.InventoryProvider;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,7 +25,7 @@ public class User {
     @ManyToMany
     @JoinTable(
             name = "user_assessment",
-            joinColumns= @JoinColumn(name = "user_id"),
+            joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "assessment_id")
     )
     private Set<Assessment> assessments;
@@ -31,35 +33,53 @@ public class User {
     @ManyToMany
     @JoinTable(
             name = "user_shoppingList",
-            joinColumns = @JoinColumn(name= "user_id"),
-            inverseJoinColumns = @JoinColumn(name= "shoppinglist_id")
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "shoppinglist_id")
     )
     private Set<ShoppingList> shoppingLists;
 
     @ManyToMany
     @JoinTable(
             name = "user_recipe",
-            joinColumns = @JoinColumn(name="user_id"),
-            inverseJoinColumns = @JoinColumn(name="recipe_id")
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "recipe_id")
     )
     private List<Recipe> recipes;
 
     @ManyToMany
     @JoinTable(
-            name="user_inventory",
+            name = "user_inventory",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name="inventory_id")
+            inverseJoinColumns = @JoinColumn(name = "inventory_id")
     )
     private Set<Inventory> inventories;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-    private Map<Long,Tray>trays;
+    private Map<Long, Tray> trays;
 
     public User() {
         this.assessments = new HashSet<>();
         this.shoppingLists = new HashSet<>();
         this.recipes = new ArrayList<>();
         this.inventories = new HashSet<>();
+    }
+
+    public void addInventory(InventoryProvider provider,String name) {
+
+        Inventory inventory = InventoryServiceFactory.getInventory(provider,name);
+        this.getInventories().add(inventory);
+    }
+
+    public void addShoppingList(ShoppingList list){
+        this.shoppingLists.add(list);
+    }
+
+    public void addRecipe(Recipe recipe){
+        this.recipes.add(recipe);
+    }
+
+    public void addAssessment(Assessment assessment){
+        this.assessments.add(assessment);
     }
 
     @Override
@@ -90,6 +110,4 @@ public class User {
                 ", trays=" + trays +
                 '}';
     }
-
-
 }

@@ -1,6 +1,11 @@
 package com.miguel.engeneering.frozzenlist.services.serviceImplementations;
 
+import com.miguel.engeneering.frozzenlist.models.Assessment;
+import com.miguel.engeneering.frozzenlist.models.Recipe;
+import com.miguel.engeneering.frozzenlist.models.ShoppingList;
 import com.miguel.engeneering.frozzenlist.models.User;
+import com.miguel.engeneering.frozzenlist.models.factories.InventoryServiceFactory;
+import com.miguel.engeneering.frozzenlist.models.factories.strategies.InventoryProvider;
 import com.miguel.engeneering.frozzenlist.repositories.UserRepository;
 import com.miguel.engeneering.frozzenlist.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,6 +132,27 @@ public class UserServiceImpl implements UserService {
         return userList.stream()
                        .sorted(Comparator.comparing(User::getEmail))
                        .toList();
+    }
+
+    @Override
+    public void addInventory(User user,InventoryProvider provider, String name) {
+        user.addInventory(provider,name);
+    }
+
+    @Override
+    public void addShoppingList(User user, ShoppingList shoppingList) {
+        user.addShoppingList(shoppingList);
+    }
+
+
+    @Override
+    public void addRecipe(User user, Recipe recipe) {
+
+    }
+
+    @Override
+    public void addAssessment(User user, Assessment assessment) {
+
     }
 
     private String encodePassword(String decodedPassword) {
