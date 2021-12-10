@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -65,42 +62,71 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserByLastName(String name) {
-        return null;
+        User userTemp =null;
+        Iterator<User> userIterator =  this.userRepository.findAll().iterator();
+        while (userIterator.hasNext()){
+            if(userIterator.next().getLastName().equals(name)){
+                userTemp = userIterator.next();
+            }
+        }
+        return userTemp;
     }
 
     @Override
     public User findUserByFirstName(String name) {
-        return null;
+        User userTemp = null;
+        Iterator<User> userIterator = this.userRepository.findAll().iterator();
+        while(userIterator.hasNext()){
+            if(userIterator.next().getFirstName().equals(name)){
+                userTemp = userIterator.next();
+            }
+        }
+        return userTemp;
     }
 
     @Override
-    public User findUserByEmail(String name) {
-        return null;
+    public User findUserByEmail(String email) {
+        User userTemp = null;
+        Iterator<User> userIterator = this.userRepository.findAll().iterator();
+        while (userIterator.hasNext()){
+            if(userIterator.next().getEmail().equals(email)){
+                userTemp = userIterator.next();
+            }
+        }
+        return userTemp;
     }
 
     @Override
     public String deleteById(Long id) {
-        return null;
+        this.userRepository.deleteById(id);
+        return "user deleted...";
     }
 
     @Override
     public String deleteAll(List<Long> ids) {
-        return null;
+        ids.forEach(this::deleteById);
+        return "users deleted...";
     }
 
     @Override
-    public List<User> sortUserByFirstName() {
-        return null;
+    public List<User> sortUserByFirstName(List<User>userList) {
+        return userList.stream()
+                       .sorted(Comparator.comparing(User::getFirstName))
+                       .toList();
     }
 
     @Override
-    public List<User> sortUserByLastName() {
-        return null;
+    public List<User> sortUserByLastName(List<User>userList) {
+        return userList.stream()
+                       .sorted(Comparator.comparing(User::getLastName))
+                       .toList();
     }
 
     @Override
-    public List<User> sortUserByEmail() {
-        return null;
+    public List<User> sortUserByEmail(List<User>userList) {
+        return userList.stream()
+                       .sorted(Comparator.comparing(User::getEmail))
+                       .toList();
     }
 
     private String encodePassword(String decodedPassword) {

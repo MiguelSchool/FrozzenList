@@ -75,5 +75,21 @@ public class User {
         return Objects.hash(id, email);
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "lastName='" + lastName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", birthday=" + birthday +
+                ", assessments=" + assessments +
+                ", shoppingLists=" + shoppingLists +
+                ", recipes=" + recipes +
+                ", inventories=" + inventories +
+                ", trays=" + trays +
+                '}';
+    }
+
 
 }

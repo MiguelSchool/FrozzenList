@@ -19,8 +19,8 @@ public interface UserService {
     public String deleteById(Long id);
     public String deleteAll(List<Long>ids);
 
-    public List<User> sortUserByFirstName();
-    public List<User> sortUserByLastName();
-    public List<User> sortUserByEmail();
+    public List<User> sortUserByFirstName(List<User>userList);
+    public List<User> sortUserByLastName(List<User>userList);
+    public List<User> sortUserByEmail(List<User>userList);
 
 }
