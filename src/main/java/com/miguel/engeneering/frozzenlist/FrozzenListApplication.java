@@ -10,5 +10,4 @@ public class FrozzenListApplication {
         SpringApplication.run(FrozzenListApplication.class, args);
 
     }
-
 }

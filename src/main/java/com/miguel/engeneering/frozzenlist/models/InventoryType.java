@@ -15,10 +15,11 @@ public class InventoryType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String type;
+    private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
     private List<Inventory> inventories;
+
 
     @Override
     public boolean equals(Object o) {

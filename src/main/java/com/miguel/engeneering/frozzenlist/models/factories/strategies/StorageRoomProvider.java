@@ -8,14 +8,14 @@ public class StorageRoomProvider implements InventoryProvider {
     @Override
     public Inventory getInventory(String name) {
         InventoryType inventoryType = new InventoryType();
-        inventoryType.setType("StorageRoom");
+        inventoryType.setName("StorageRoom");
         return new Inventory(name, inventoryType);
     }
 
     @Override
     public Inventory getInventory(String name, String inventoryPlace) {
         InventoryType inventoryType = new InventoryType();
-        inventoryType.setType("StorageRoom");
+        inventoryType.setName("StorageRoom");
         return new Inventory(name, inventoryPlace, inventoryType);
     }
 }

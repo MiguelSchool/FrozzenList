@@ -9,14 +9,14 @@ public class FreezerProvider implements InventoryProvider {
     @Override
     public Inventory getInventory(String name) {
         InventoryType inventoryType = new InventoryType();
-        inventoryType.setType("Freezer");
+        inventoryType.setName("Freezer");
         return new Inventory(name, inventoryType);
     }
 
     @Override
     public Inventory getInventory(String name, String inventoryPlace) {
         InventoryType inventoryType = new InventoryType();
-        inventoryType.setType("Freezer");
+        inventoryType.setName("Freezer");
         return new Inventory(name, inventoryPlace, inventoryType);
     }
 

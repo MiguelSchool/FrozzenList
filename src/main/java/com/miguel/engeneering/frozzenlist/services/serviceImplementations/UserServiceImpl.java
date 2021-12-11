@@ -147,12 +147,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addRecipe(User user, Recipe recipe) {
-
+        user.addRecipe(recipe);
     }
 
     @Override
     public void addAssessment(User user, Assessment assessment) {
-
+        user.addAssessment(assessment);
     }
 
     private String encodePassword(String decodedPassword) {
