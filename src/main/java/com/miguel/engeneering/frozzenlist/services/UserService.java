@@ -20,8 +20,8 @@ public interface UserService {
     public User findUserByFirstName(String name);
     public User findUserByEmail(String name);
 
-    public String deleteById(Long id);
-    public String deleteAll(List<Long>ids);
+    public boolean deleteById(Long id);
+    public void deleteAll(List<Long>ids);
 
     public List<User> sortUserByFirstName(List<User>userList);
     public List<User> sortUserByLastName(List<User>userList);

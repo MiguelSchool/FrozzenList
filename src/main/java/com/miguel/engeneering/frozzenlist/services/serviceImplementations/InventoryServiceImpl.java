@@ -1,14 +1,15 @@
 package com.miguel.engeneering.frozzenlist.services.serviceImplementations;
 
 import com.miguel.engeneering.frozzenlist.models.Inventory;
-import com.miguel.engeneering.frozzenlist.models.InventoryType;
 import com.miguel.engeneering.frozzenlist.repositories.InventoryRepository;
 import com.miguel.engeneering.frozzenlist.services.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Service
 public class InventoryServiceImpl implements InventoryService {
 
     @Autowired
@@ -20,7 +21,7 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public Set<Inventory> saveInventory(Set<Inventory> inventories) {
+    public Set<Inventory> saveInventories(Set<Inventory> inventories) {
         inventories.forEach(this::saveInventory);
         return inventories;
     }
@@ -35,6 +36,20 @@ public class InventoryServiceImpl implements InventoryService {
         Set<Inventory>filteredInventories = new HashSet<>();
         ids.forEach(value -> filteredInventories.add(this.findInventoryById(value)));
         return filteredInventories;
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        if(this.inventoryRepository.existsById(id)){
+            this.inventoryRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void deleteAll(List<Long> ids) {
+        this.inventoryRepository.deleteAllById(ids);
     }
 
     @Override
@@ -76,15 +91,16 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public Set<Inventory> sortByInventoryType(Set<Inventory> inventories) {
+    public Set<Inventory> sortByInventoryTypeName(Set<Inventory> inventories) {
         return inventories.stream()
-                          .sorted(Comparator.comparing(t -> InventoryType.getName(t)))
+                          .sorted(Comparator.comparing(e-> e.getType().getName()))
                           .collect(Collectors.toCollection(TreeSet::new));
-
     }
 
     @Override
     public Set<Inventory> sortByNumberOfTrays(Set<Inventory> inventories) {
-        return null;
+        return inventories.stream()
+                          .sorted(Comparator.comparing(e -> e.getTrays().size()))
+                          .collect(Collectors.toCollection(TreeSet::new));
     }
 }

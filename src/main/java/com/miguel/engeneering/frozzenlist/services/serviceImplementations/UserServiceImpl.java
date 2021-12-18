@@ -4,7 +4,6 @@ import com.miguel.engeneering.frozzenlist.models.Assessment;
 import com.miguel.engeneering.frozzenlist.models.Recipe;
 import com.miguel.engeneering.frozzenlist.models.ShoppingList;
 import com.miguel.engeneering.frozzenlist.models.User;
-import com.miguel.engeneering.frozzenlist.models.factories.InventoryServiceFactory;
 import com.miguel.engeneering.frozzenlist.models.factories.strategies.InventoryProvider;
 import com.miguel.engeneering.frozzenlist.repositories.UserRepository;
 import com.miguel.engeneering.frozzenlist.services.UserService;
@@ -29,14 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(User user) {
-        if (user.getId() != null && !(this.userRepository.existsById(user.getId()))) {
-            return this.save(user);
-        }
-        if (user.getId() != null && this.userRepository.existsById(user.getId())) {
-            this.userRepository.delete(user);
-            return this.save(user);
-        }
-        return null;
+       return this.userRepository.save(user);
     }
 
     @Override
@@ -51,11 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserByID(Long id) {
-        Optional<User> user = Optional.empty();
-        if (id != null && this.userRepository.existsById(id)) {
-            user = this.userRepository.findById(id);
-        }
-        return user.orElse(null);
+       return this.userRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -102,15 +90,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String deleteById(Long id) {
-        this.userRepository.deleteById(id);
-        return "user deleted...";
+    public boolean deleteById(Long id) {
+        if(this.userRepository.existsById(id)){
+            this.userRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public String deleteAll(List<Long> ids) {
+    public void deleteAll(List<Long> ids) {
         ids.forEach(this::deleteById);
-        return "users deleted...";
     }
 
     @Override
