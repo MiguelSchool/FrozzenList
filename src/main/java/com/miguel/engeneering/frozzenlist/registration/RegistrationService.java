@@ -1,6 +1,8 @@
 package com.miguel.engeneering.frozzenlist.registration;
 
 import com.miguel.engeneering.frozzenlist.models.User;
+import com.miguel.engeneering.frozzenlist.registration.token.ConfirmationToken;
+import com.miguel.engeneering.frozzenlist.registration.token.ConfirmationTokenService;
 import com.miguel.engeneering.frozzenlist.services.serviceImplementations.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,7 @@ public class RegistrationService {
 
     @Transactional
     public String confirmToken(String token) {
+
         ConfirmationToken confirmationToken = confirmationTokenService.getToken(token)
                 .orElseThrow(()->
                         new IllegalStateException("Token not found"));

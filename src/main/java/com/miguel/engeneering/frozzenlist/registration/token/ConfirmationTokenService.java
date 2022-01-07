@@ -1,4 +1,4 @@
-package com.miguel.engeneering.frozzenlist.registration;
+package com.miguel.engeneering.frozzenlist.registration.token;
 import com.miguel.engeneering.frozzenlist.repositories.ConfirmationTokenRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,13 +16,13 @@ public class ConfirmationTokenService {
         confirmationTokenRepository.save(token);
     }
 
-    public Optional<ConfirmationToken> getToken(String token) {
-        return this.confirmationTokenRepository.findByConfigurationToken(token);
+     public Optional<ConfirmationToken> getToken(String token) {
+        return this.confirmationTokenRepository.findByToken(token);
     }
 
     public void setConfirmedAt(String token) {
       ConfirmationToken confirmationToken =
-              this.confirmationTokenRepository.findByConfigurationToken(token)
+              this.confirmationTokenRepository.findByToken(token)
                       .orElseThrow(()-> new IllegalStateException("this token not found"));
       confirmationToken.setConfirmedAt(LocalDateTime.now());
     }

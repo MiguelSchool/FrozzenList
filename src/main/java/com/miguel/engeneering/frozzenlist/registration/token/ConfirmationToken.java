@@ -1,4 +1,4 @@
-package com.miguel.engeneering.frozzenlist.registration;
+package com.miguel.engeneering.frozzenlist.registration.token;
 
 import com.miguel.engeneering.frozzenlist.models.User;
 import lombok.Getter;
