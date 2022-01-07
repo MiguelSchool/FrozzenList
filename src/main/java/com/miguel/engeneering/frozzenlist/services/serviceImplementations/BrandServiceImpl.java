@@ -4,6 +4,7 @@ package com.miguel.engeneering.frozzenlist.services.serviceImplementations;
 import com.miguel.engeneering.frozzenlist.models.Brand;
 import com.miguel.engeneering.frozzenlist.repositories.BrandRepository;
 import com.miguel.engeneering.frozzenlist.services.BrandService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +13,9 @@ import java.util.Iterator;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class BrandServiceImpl implements BrandService {
 
-    @Autowired
     BrandRepository brandRepository;
 
     @Override

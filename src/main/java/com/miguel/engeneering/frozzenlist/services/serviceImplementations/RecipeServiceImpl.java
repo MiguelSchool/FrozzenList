@@ -3,6 +3,7 @@ package com.miguel.engeneering.frozzenlist.services.serviceImplementations;
 import com.miguel.engeneering.frozzenlist.models.Recipe;
 import com.miguel.engeneering.frozzenlist.repositories.RecipeRepository;
 import com.miguel.engeneering.frozzenlist.services.RecipeService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,9 +12,11 @@ import java.util.Iterator;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class RecipeServiceImpl implements RecipeService {
 
     RecipeRepository recipeRepository;
+
     @Override
     public Recipe saveRecipe(Recipe recipe) {
         return this.recipeRepository.save(recipe);

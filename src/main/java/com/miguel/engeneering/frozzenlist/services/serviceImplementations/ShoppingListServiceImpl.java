@@ -4,6 +4,7 @@ import com.miguel.engeneering.frozzenlist.models.ShoppingList;
 import com.miguel.engeneering.frozzenlist.models.User;
 import com.miguel.engeneering.frozzenlist.repositories.ShoppingListRepository;
 import com.miguel.engeneering.frozzenlist.services.ShoppingListService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +16,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class ShoppingListServiceImpl implements ShoppingListService {
 
-    @Autowired
     ShoppingListRepository shoppingListRepository;
 
     @Override

@@ -1,9 +1,14 @@
 package com.miguel.engeneering.frozzenlist.models;
 
+import com.miguel.engeneering.frozzenlist.models.enums.UserRole;
 import com.miguel.engeneering.frozzenlist.models.factories.InventoryServiceFactory;
 import com.miguel.engeneering.frozzenlist.models.factories.strategies.InventoryProvider;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -12,7 +17,8 @@ import java.util.*;
 @Getter
 @Setter
 @Entity
-public class User {
+@AllArgsConstructor
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,6 +27,11 @@ public class User {
     private String email;
     private String password;
     private LocalDate birthday;
+    private boolean locked;
+    private boolean enabled;
+
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
     @ManyToMany
     @JoinTable(
@@ -57,6 +68,17 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private Map<Long, Tray> trays;
 
+    public User(
+            String email,
+            String password)
+    {
+        this();
+        this.email = email;
+        this.password = password;
+        this.enabled = false;
+        this.locked = false;
+    }
+
     public User() {
         this.assessments = new HashSet<>();
         this.shoppingLists = new HashSet<>();
@@ -80,6 +102,39 @@ public class User {
 
     public void addAssessment(Assessment assessment){
         this.assessments.add(assessment);
+    }
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
+        return Collections.singletonList(authority);
+
+    }
+
+    @Override
+    public String getUsername() {
+        return this.firstName;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return locked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
     }
 
     @Override

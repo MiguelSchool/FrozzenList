@@ -3,6 +3,7 @@ package com.miguel.engeneering.frozzenlist.services.serviceImplementations;
 import com.miguel.engeneering.frozzenlist.models.Stock;
 import com.miguel.engeneering.frozzenlist.repositories.StockRepository;
 import com.miguel.engeneering.frozzenlist.services.StockService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class StockServiceImpl implements StockService {
 
-    @Autowired
     StockRepository stockRepository;
 
     @Override

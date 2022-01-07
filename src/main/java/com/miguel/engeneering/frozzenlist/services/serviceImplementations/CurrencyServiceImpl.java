@@ -3,6 +3,7 @@ package com.miguel.engeneering.frozzenlist.services.serviceImplementations;
 import com.miguel.engeneering.frozzenlist.models.Currency;
 import com.miguel.engeneering.frozzenlist.repositories.CurrencyRepository;
 import com.miguel.engeneering.frozzenlist.services.CurrencyService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class CurrencyServiceImpl implements CurrencyService {
 
-    @Autowired
     private CurrencyRepository currencyRepository;
 
     @Override

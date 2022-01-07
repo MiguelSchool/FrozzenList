@@ -4,6 +4,7 @@ import com.miguel.engeneering.frozzenlist.models.Tray;
 import com.miguel.engeneering.frozzenlist.models.User;
 import com.miguel.engeneering.frozzenlist.repositories.TrayRepository;
 import com.miguel.engeneering.frozzenlist.services.TrayService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +12,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class TrayServiceImpl implements TrayService {
 
-    @Autowired
-    TrayRepository trayRepository;
+    private final TrayRepository trayRepository;
 
     @Override
     public Tray saveTray(Tray tray) {

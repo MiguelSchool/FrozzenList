@@ -5,30 +5,32 @@ import com.miguel.engeneering.frozzenlist.models.Recipe;
 import com.miguel.engeneering.frozzenlist.models.ShoppingList;
 import com.miguel.engeneering.frozzenlist.models.User;
 import com.miguel.engeneering.frozzenlist.models.factories.strategies.InventoryProvider;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
-    public User saveUser(User user);
-    public List<User> saveUsers(List<User>users);
+    String signUpUser(User user);
+    void enableUser(String email);
+    List<User> saveUsers(List<User>users);
 
-    public User findUserByID(Long id);
-    public List<User> findAllByID(List<Long>ids);
+    User findUserByID(Long id);
+    List<User> findAllByID(List<Long>ids);
 
-    public User findUserByLastName(String name);
-    public User findUserByFirstName(String name);
-    public User findUserByEmail(String name);
+    User findUserByLastName(String name);
+    User findUserByFirstName(String name);
+    User findUserByEmail(String name);
 
-    public boolean deleteById(Long id);
-    public void deleteAll(List<Long>ids);
+    boolean deleteById(Long id);
+    void deleteAll(List<Long>ids);
 
-    public List<User> sortUserByFirstName(List<User>userList);
-    public List<User> sortUserByLastName(List<User>userList);
-    public List<User> sortUserByEmail(List<User>userList);
+    List<User> sortUserByFirstName(List<User>userList);
+    List<User> sortUserByLastName(List<User>userList);
+    List<User> sortUserByEmail(List<User>userList);
 
-    public void addInventory(User user ,InventoryProvider provider, String name);
-    public void addShoppingList(User user, ShoppingList shoppingList);
-    public void addRecipe(User user, Recipe recipe);
-    public void addAssessment(User user,Assessment assessment);
+    void addInventory(User user ,InventoryProvider provider, String name);
+    void addShoppingList(User user, ShoppingList shoppingList);
+    void addRecipe(User user, Recipe recipe);
+    void addAssessment(User user,Assessment assessment);
 }

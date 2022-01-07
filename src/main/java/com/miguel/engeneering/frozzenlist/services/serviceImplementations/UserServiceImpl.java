@@ -5,30 +5,56 @@ import com.miguel.engeneering.frozzenlist.models.Recipe;
 import com.miguel.engeneering.frozzenlist.models.ShoppingList;
 import com.miguel.engeneering.frozzenlist.models.User;
 import com.miguel.engeneering.frozzenlist.models.factories.strategies.InventoryProvider;
+import com.miguel.engeneering.frozzenlist.registration.ConfirmationToken;
+import com.miguel.engeneering.frozzenlist.registration.ConfirmationTokenService;
 import com.miguel.engeneering.frozzenlist.repositories.UserRepository;
 import com.miguel.engeneering.frozzenlist.services.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
-
 
     @Autowired
     private UserRepository userRepository;
-
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private ConfirmationTokenService confirmationTokenService;
+    private int configurationTimeMinutes = 15;
 
     public UserServiceImpl() {
         this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
     }
 
+
     @Override
-    public User saveUser(User user) {
-       return this.userRepository.save(user);
+    public String signUpUser(User user) {
+        boolean userExists = userRepository.findByEmail(user.getEmail()).isPresent();
+        if(userExists){
+            throw new IllegalStateException("email already exists");
+        }
+        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        userRepository.save(user);
+        String token = UUID.randomUUID().toString();
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+            token,
+            LocalDateTime.now(),
+            LocalDateTime.now().plusMinutes(configurationTimeMinutes),
+            user
+        );
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+        //TODO: base64 encode user informations
+        //TODO: send email
+        return token;
     }
 
     @Override
@@ -79,14 +105,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserByEmail(String email) {
-        User userTemp = null;
-        Iterator<User> userIterator = this.userRepository.findAll().iterator();
-        while (userIterator.hasNext()){
-            if(userIterator.next().getEmail().equals(email)){
-                userTemp = userIterator.next();
+        try{
+            User userTemp = null;
+            Iterator<User> userIterator = this.userRepository.findAll().iterator();
+            while (userIterator.hasNext()){
+                if(userIterator.next().getEmail().equals(email)){
+                    userTemp = userIterator.next();
+                }
             }
+            return userTemp;
+        }catch (UsernameNotFoundException ex) {
+            String USER_NOT_FOUND_MESSAGE = "user with email %s is not found";
+            throw new UsernameNotFoundException(String.format(USER_NOT_FOUND_MESSAGE,email));
         }
-        return userTemp;
     }
 
     @Override
@@ -152,5 +183,16 @@ public class UserServiceImpl implements UserService {
     private User save(User user) {
         user.setPassword(this.encodePassword(user.getPassword()));
         return this.userRepository.save(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return this.findUserByEmail(email);
+    }
+
+    @Override
+    public void enableUser(String email) {
+        this.userRepository.findByEmail(email)
+                .orElseThrow(()-> new IllegalStateException("email is not found!")).setEnabled(true);
     }
 }

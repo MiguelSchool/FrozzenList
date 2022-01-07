@@ -3,6 +3,7 @@ package com.miguel.engeneering.frozzenlist.services.serviceImplementations;
 import com.miguel.engeneering.frozzenlist.models.Ingredient;
 import com.miguel.engeneering.frozzenlist.repositories.IngredientRepository;
 import com.miguel.engeneering.frozzenlist.services.IngredientService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +14,10 @@ import java.util.Iterator;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class IngredientServiceImpl implements IngredientService {
 
-    @Autowired
+
     private IngredientRepository ingredientRepository;
 
     @Override

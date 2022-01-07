@@ -3,6 +3,7 @@ package com.miguel.engeneering.frozzenlist.services.serviceImplementations;
 import com.miguel.engeneering.frozzenlist.models.InventoryType;
 import com.miguel.engeneering.frozzenlist.repositories.InventoryTypeRepository;
 import com.miguel.engeneering.frozzenlist.services.InventoryTypeService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class InventoryTypeServiceImpl implements InventoryTypeService {
 
-    @Autowired
     InventoryTypeRepository inventoryTypeRepository;
 
     @Override

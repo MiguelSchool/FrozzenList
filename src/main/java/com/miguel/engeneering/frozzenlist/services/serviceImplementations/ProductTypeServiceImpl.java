@@ -3,6 +3,7 @@ package com.miguel.engeneering.frozzenlist.services.serviceImplementations;
 import com.miguel.engeneering.frozzenlist.models.ProductType;
 import com.miguel.engeneering.frozzenlist.repositories.ProductTypeRepository;
 import com.miguel.engeneering.frozzenlist.services.ProductTypeService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +14,9 @@ import java.util.List;
 
 
 @Service
+@AllArgsConstructor
 public class ProductTypeServiceImpl implements ProductTypeService {
 
-    @Autowired
     ProductTypeRepository productTypeRepository;
 
     @Override
