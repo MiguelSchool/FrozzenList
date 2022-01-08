@@ -77,6 +77,7 @@ public class User implements UserDetails {
         this.password = password;
         this.enabled = false;
         this.locked = false;
+        this.role = UserRole.USER;
     }
 
     public User() {
@@ -87,7 +88,6 @@ public class User implements UserDetails {
     }
 
     public void addInventory(InventoryProvider provider,String name) {
-
         Inventory inventory = InventoryServiceFactory.getInventory(provider,name);
         this.getInventories().add(inventory);
     }

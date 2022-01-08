@@ -14,13 +14,12 @@ public interface UserService extends UserDetailsService {
     String signUpUser(User user);
     void enableUser(String email);
     List<User> saveUsers(List<User>users);
+    User saveUser(User user);
 
-    User findUserByID(Long id);
-    List<User> findAllByID(List<Long>ids);
+    Optional<User> findUserByID(Long id);
+    Optional<List<User>> findAllByID(List<Long>ids);
 
-    User findUserByLastName(String name);
-    User findUserByFirstName(String name);
-    User findUserByEmail(String name);
+    Optional findUserByEmail(String name);
 
     boolean deleteById(Long id);
     void deleteAll(List<Long>ids);

@@ -1,5 +1,6 @@
 package com.miguel.engeneering.frozzenlist.services.serviceImplementations;
 
+import com.miguel.engeneering.frozzenlist.exceptions.UserNotFoundException;
 import com.miguel.engeneering.frozzenlist.models.Assessment;
 import com.miguel.engeneering.frozzenlist.models.Recipe;
 import com.miguel.engeneering.frozzenlist.models.ShoppingList;
@@ -53,8 +54,12 @@ public class UserServiceImpl implements UserService {
         );
         confirmationTokenService.saveConfirmationToken(confirmationToken);
         //TODO: base64 encode user informations
-        //TODO: send email
         return token;
+    }
+
+    @Override
+    public User saveUser(User user) {
+        return this.userRepository.save(user);
     }
 
     @Override
@@ -80,31 +85,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByLastName(String name) {
-        User userTemp =null;
-        Iterator<User> userIterator =  this.userRepository.findAll().iterator();
-        while (userIterator.hasNext()){
-            if(userIterator.next().getLastName().equals(name)){
-                userTemp = userIterator.next();
-            }
-        }
-        return userTemp;
-    }
-
-    @Override
-    public User findUserByFirstName(String name) {
-        User userTemp = null;
-        Iterator<User> userIterator = this.userRepository.findAll().iterator();
-        while(userIterator.hasNext()){
-            if(userIterator.next().getFirstName().equals(name)){
-                userTemp = userIterator.next();
-            }
-        }
-        return userTemp;
-    }
-
-    @Override
-    public User findUserByEmail(String email) {
+    public Optional<User> findUserByEmail(String email) {
         try{
             User userTemp = null;
             Iterator<User> userIterator = this.userRepository.findAll().iterator();
@@ -113,7 +94,9 @@ public class UserServiceImpl implements UserService {
                     userTemp = userIterator.next();
                 }
             }
-            return userTemp;
+            assert userTemp != null;
+            return Optional.of(userTemp);
+
         }catch (UsernameNotFoundException ex) {
             String USER_NOT_FOUND_MESSAGE = "user with email %s is not found";
             throw new UsernameNotFoundException(String.format(USER_NOT_FOUND_MESSAGE,email));
@@ -187,7 +170,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return this.findUserByEmail(email);
+        return this.findUserByEmail(email)
+                .orElseThrow(UserNotFoundException::new);
     }
 
     @Override
