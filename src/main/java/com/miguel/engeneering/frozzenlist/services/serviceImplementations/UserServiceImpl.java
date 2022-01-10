@@ -73,15 +73,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByID(Long id) {
-       return this.userRepository.findById(id).orElse(null);
+    public Optional<User> findUserByID(Long id) {
+       return this.userRepository.findById(id);
     }
 
     @Override
-    public List<User> findAllByID(List<Long> ids) {
-        List<User> filteredUser = new ArrayList<>();
-        ids.forEach(id -> filteredUser.add(this.findUserByID(id)));
-        return filteredUser;
+    public Optional<List<User>> findAllByID(List<Long> ids) {
+        return Optional.of(userRepository.findAllById(ids));
     }
 
     @Override

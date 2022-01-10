@@ -1,10 +1,8 @@
 package com.miguel.engeneering.frozzenlist.controllers;
 
 import com.miguel.engeneering.frozzenlist.models.User;
-import com.miguel.engeneering.frozzenlist.repositories.UserRepository;
 import com.miguel.engeneering.frozzenlist.services.serviceImplementations.UserServiceImpl;
 import lombok.AllArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
