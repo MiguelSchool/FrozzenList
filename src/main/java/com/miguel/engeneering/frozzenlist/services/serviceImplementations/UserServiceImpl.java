@@ -78,9 +78,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<List<User>> findAllByID(List<Long> ids) {
-        return Optional.of(userRepository.findAllById(ids));
+    public List<User> findAllByID(List<Long> ids) {
+        return this.userRepository.findAllById(ids);
     }
+
 
     @Override
     public Optional<User> findUserByEmail(String email) {

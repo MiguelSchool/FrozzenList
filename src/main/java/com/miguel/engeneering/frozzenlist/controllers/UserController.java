@@ -33,7 +33,7 @@ public class UserController {
 
     @GetMapping("/{ids}")
     public ResponseEntity<List<User>> getUsersById(@PathVariable List<Long>ids) {
-        return this.userService.findAllByID(ids)
+        return Optional.of(this.userService.findAllByID(ids))
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
